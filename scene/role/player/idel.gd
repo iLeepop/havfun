@@ -7,10 +7,16 @@ func _ready() -> void:
 	player = get_parent().get_parent()
 
 func enter_condition() -> bool:
-	return Input.is_action_pressed("move_down") || Input.is_action_pressed("move_up") || Input.is_action_pressed("move_left") || Input.is_action_pressed("move_right")
+	var x_direction = Input.get_axis("move_left", "move_right")
+	var y_direction = Input.get_axis("move_up", "move_down")
+	var is_still = is_zero_approx(x_direction) and is_zero_approx(y_direction)
+	return is_still
 
 func exit_condition() -> bool:
-	return true
+	var x_direction = Input.get_axis("move_left", "move_right")
+	var y_direction = Input.get_axis("move_up", "move_down")
+	var is_still = is_zero_approx(x_direction) and is_zero_approx(y_direction)
+	return not is_still	
 
 func on_enter():
 	pass
@@ -18,5 +24,5 @@ func on_enter():
 func on_exit():
 	pass
 
-func update(delta):
+func update(_delta):
 	animation_player.play("RESET")
